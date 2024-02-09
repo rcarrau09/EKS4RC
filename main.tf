@@ -256,5 +256,6 @@ resource "aws_eks_fargate_profile" "gr5_capstone2_kube_system" {
 resource "aws_eks_addon" "gr5_capstone2_coredns" {
   cluster_name = var.cluster_name
   addon_name = "coredns"
+  resolve_conflicts = "OVERWRITE"
   depends_on = [aws_eks_cluster.gr5_capstone2_eks_cluster,aws_eks_fargate_profile.gr5_capstone2_kube_system]
 }
