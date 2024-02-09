@@ -202,17 +202,15 @@ resource "aws_eks_cluster" "gr5_capstone2_eks_cluster" {
 resource "aws_eks_addon" "gr5_capstone2_vpc_cni" {
   cluster_name = var.cluster_name
   addon_name = "vpc-cni"
+  depends_on = [aws_eks_cluster.gr5_capstone2_eks_cluster]
 }
 
 resource "aws_eks_addon" "gr5_capstone2_kube_proxy" {
   cluster_name = var.cluster_name
   addon_name = "kube-proxy"
+  depends_on = [aws_eks_cluster.gr5_capstone2_eks_cluster]
 }
 
-resource "aws_eks_addon" "gr5_capstone2_coredns" {
-  cluster_name = var.cluster_name
-  addon_name = "coredns"
-}
 
 resource "aws_iam_role" "gr5_capstone2_eks_fargate_profile" {
   name = "gr5-capstone2-eks-fargate-profile"
@@ -252,4 +250,11 @@ resource "aws_eks_fargate_profile" "gr5_capstone2_kube_system" {
   selector {
     namespace = "kube-system"
   }
+  depends_on = [aws_eks_cluster.gr5_capstone2_eks_cluster]
+}
+
+resource "aws_eks_addon" "gr5_capstone2_coredns" {
+  cluster_name = var.cluster_name
+  addon_name = "coredns"
+  depends_on = [aws_eks_cluster.gr5_capstone2_eks_cluster,aws_eks_fargate_profile.gr5_capstone2_kube_system]
 }
