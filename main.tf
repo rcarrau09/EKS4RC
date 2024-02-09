@@ -209,6 +209,11 @@ resource "aws_eks_addon" "gr5_capstone2_kube_proxy" {
   addon_name = "kube-proxy"
 }
 
+resource "aws_eks_addon" "gr5_capstone2_coredns" {
+  cluster_name = var.cluster_name
+  addon_name = "coredns"
+}
+
 resource "aws_iam_role" "gr5_capstone2_eks_fargate_profile" {
   name = "gr5-capstone2-eks-fargate-profile"
   assume_role_policy = data.aws_iam_policy_document.gr5_assume_role_fargate.json
