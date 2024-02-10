@@ -20,7 +20,7 @@ variable "cluster_version" {
 }
 
 resource "aws_vpc" "gr5_capstone2_vpc_stack" {
-  cidr_block = "192.168.0.0/16"
+  cidr_block = "10.0.0.0/16"
 
 
   enable_dns_support   = true
@@ -41,7 +41,7 @@ resource "aws_internet_gateway" "gr5_capstone2_igw" {
 
 resource "aws_subnet" "gr5_capstone2_private_us_west_2a" {
   vpc_id            = aws_vpc.gr5_capstone2_vpc_stack.id
-  cidr_block        = "192.168.128.0/18"
+  cidr_block        = "10.0.0.0/19"
   availability_zone = "us-west-2a"
 
   tags = {
@@ -53,7 +53,7 @@ resource "aws_subnet" "gr5_capstone2_private_us_west_2a" {
 
 resource "aws_subnet" "gr5_capstone2_private_us_west_2b" {
   vpc_id            = aws_vpc.gr5_capstone2_vpc_stack.id
-  cidr_block        = "192.168.192.0/18"
+  cidr_block        = "10.0.32.0/19"
   availability_zone = "us-west-2b"
 
   tags = {
@@ -65,7 +65,7 @@ resource "aws_subnet" "gr5_capstone2_private_us_west_2b" {
 
 resource "aws_subnet" "gr5_capstone2_public_us_west_2a" {
   vpc_id            = aws_vpc.gr5_capstone2_vpc_stack.id
-  cidr_block        = "192.168.0.0/18"
+  cidr_block        = "10.0.64.0/19"
   availability_zone = "us-west-2a"
   map_public_ip_on_launch = true
 
@@ -78,7 +78,7 @@ resource "aws_subnet" "gr5_capstone2_public_us_west_2a" {
 
 resource "aws_subnet" "gr5_capstone2_public_us_west_2b" {
   vpc_id            = aws_vpc.gr5_capstone2_vpc_stack.id
-  cidr_block        = "192.168.64.0/18"
+  cidr_block        = "10.0.96.0/19"
   availability_zone = "us-west-2b"
   map_public_ip_on_launch = true
 
@@ -195,6 +195,7 @@ resource "aws_eks_cluster" "gr5_capstone2_eks_cluster" {
     ]
   }
 
+  enabled_cluster_log_types = ["api", "audit", "authenticator"]
   depends_on = [aws_iam_role_policy_attachment.gr5_capstone2_cluster_policy]
 
 }
